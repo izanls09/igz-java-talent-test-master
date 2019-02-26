@@ -1,56 +1,57 @@
 package com.igz.talenttest.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.igz.talenttest.input.NumberAndBinaryInput;
 import com.igz.talenttest.model.NumberAndBinary;
-import com.igz.talenttest.Input.NumberAndBinaryInput;
-import com.igz.talenttest.Output.NumberAndBinaryOutput;
+import com.igz.talenttest.output.NumberAndBinaryOutput;
+
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
-@Service public class SortByBinaryService {
+@Service
+public class SortByBinaryService {
+    public NumberAndBinaryOutput sortByBinaryThenDecimal(NumberAndBinaryInput numberAndBinaryInput) {
 
-    public NumberAndBinaryOutput sortByBinary(NumberAndBinaryInput numberAndBinaryInput) {
-        if (numberAndBinaryInput != null) {
-            NumberAndBinaryOutput numberAndBinaryOutput = new NumberAndBinaryOutput();
-            ArrayList<Integer> unsortedList = numberAndBinaryInput.getUnsortedList();
-            //numberInputFormatted = formatTheList(numberAndBinaryInput);
-            //ArrayList<Integer> numberInputFormatted = numberAndBinaryInput.toString().split(",");
-            pairNumbersWithBinary(unsortedList);
-            ifNotEmptyCompareAndSortLoop(numberAndBinaryOutput);
-            excludeBinariesAndSetOutput(numberAndBinaryOutput, numberAndBinaryOutput);
+        NumberAndBinaryOutput numberAndBinaryOutput = new NumberAndBinaryOutput();
+        ArrayList<Integer> inputData = numberAndBinaryInput.getUnsortedList();
+
+        try {
+            ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
+            ArrayList<NumberAndBinary> sortedNumberAndBinary = sortCompareNumber(unsortedNumberAndBinary);
+            numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
+        } catch(IllegalArgumentException e) {
+            System.out.println("The following error was given: " + e);
+        } finally {
+            System.out.println("Everything went ok or, at least, the exception was controlled.");
         }
-        return numberOutput;
+        return numberAndBinaryOutput;
     }
 
-    private ArrayList<Integer> pairNumbersWithBinary(ArrayList<Integer> numberOutput) {
-        ArrayList<Integer> unsortedList = new ArrayList<>();
-        Arrays.stream(new ArrayList[]{unsortedList}).forEach(numberInputFormattedAndSeparated -> {
-            NumberAndBinary numberAndBinary = new NumberAndBinary();
-            numberAndBinary.setNumber(Integer.parseInt(numberInputFormattedAndSeparated));
-            numberAndBinary.setBinaryOfNumber();
-            numbersWithBinary.add(numberAndBinary);
-        });
-        return numbersWithBinary;
+    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData){
+        ArrayList<NumberAndBinary> numberAndBinary = new ArrayList<>();
+        inputData.stream().filter(number -> number >= 0)
+                .forEachOrdered(number -> numberAndBinary
+                        .add(new NumberAndBinary(number)));
+        return numberAndBinary;
     }
 
-    private ArrayList<Integer> ifNotEmptyCompareAndSortLoop(ArrayList<Integer> numbersWithBinary){
-        NumberAndBinary numberAndBinary = new NumberAndBinary();
-        numberSorted = numberAndBinary.compareTo(numbersWithBinary);
+    private ArrayList<NumberAndBinary> sortCompareNumber(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
+        Collections.sort(unsortedNumberAndBinary);
+        for(int i = 0; i < unsortedNumberAndBinary.size() - 1; i++)
+            for (int j = i + 1; j < unsortedNumberAndBinary.size(); j++)
+                if (unsortedNumberAndBinary.get(i).getBinaryOfNumber() < unsortedNumberAndBinary.get(j).getBinaryOfNumber()) {
+                    NumberAndBinary secondaryList = new NumberAndBinary(unsortedNumberAndBinary.get(i));
+                    unsortedNumberAndBinary.set(i, unsortedNumberAndBinary.get(j));
+                    unsortedNumberAndBinary.set(j, secondaryList);
+                }
+        return unsortedNumberAndBinary;
     }
 
-    private ArrayList<Integer> excludeBinariesAndSetOutput(NumberAndBinaryOutput numberAndBinaryOutput, ArrayList<Integer> numbersWithBinary){
-        ArrayList<Integer> sortedNumbers = SortByBinaryService.extractTheNumbers(numbersWithBinary);
-        numberAndBinaryOutput.setSortedList(sortedNumbers);
-    }
-
-    private static ArrayList<Integer> extractTheNumbers(ArrayList<Integer> sortedNumbersWithBinary){
-        ArrayList<Integer> sortedNumbersWithoutBinary = new ArrayList<Integer>();
-        for (int i = 0; i < sortedNumbersWithBinary.size(); i++) {
-            NumberAndBinary numberAndBinary = sortedNumbersWithBinary.get(i);
-            sortedNumbersWithoutBinary.add(numberAndBinary.getNumber());
-        }
-        return sortedNumbersWithoutBinary;
+    private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){
+        ArrayList<Integer> output = sortedNumberAndBinary.stream()
+                .map(numberAndBinary -> numberAndBinary.getNumber())
+                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+        return output;
     }
 }

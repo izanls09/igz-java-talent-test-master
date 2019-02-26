@@ -1,22 +1,30 @@
 package com.igz.talenttest.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.toBinaryString;
 import static org.springframework.util.StringUtils.countOccurrencesOf;
 
 public class NumberAndBinary implements Comparable<NumberAndBinary> {
-
     private Integer number;
     private Integer binaryOfNumber;
 
     public NumberAndBinary() {
+        super();
     }
 
     public NumberAndBinary(Integer number) {
         this.number = number;
-        this.binaryOfNumber = numberOfBinariesInACertainNumber();
+        this.binaryOfNumber = Integer.bitCount(number);
+    }
+
+    public NumberAndBinary(NumberAndBinary numberAndBinary) {
+        this.number = numberAndBinary.number;
+        this.binaryOfNumber = Integer.bitCount(number);
+    }
+
+    public int compareTo(NumberAndBinary secondaryList) {
+        return 1;
     }
 
     public Integer getNumber() {
@@ -31,27 +39,21 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
         return binaryOfNumber;
     }
 
-    public void setBinaryOfNumber() {
-        this.binaryOfNumber = numberOfBinariesInACertainNumber();
+    public void setBinaryOfNumber(Integer number) {
+        this.binaryOfNumber = Integer.bitCount(number);
     }
 
-    private int numberOfBinariesInACertainNumber() {
-        return countOccurrencesOf(toBinaryString(this.number),"1");
-    }
-
-    @Override
-    public int compareTo(NumberAndBinary numberAndBinary) {
-        return Comparator.comparing((NumberAndBinary numberAndBinary1) -> numberAndBinary1.getBinaryOfNumber()).reversed()
-                .thenComparing((NumberAndBinary numberAndBinary2) -> numberAndBinary2.getNumber()).compare(this, numberAndBinary);
+    public int occurrencesOfBinaryInNumber() {
+        return countOccurrencesOf(toBinaryString(this.number), "1");
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NumberAndBinary numberAndBinary1 = (NumberAndBinary) o;
-        return number.equals(numberAndBinary1.number) &&
-                binaryOfNumber.equals(numberAndBinary1.binaryOfNumber);
+        NumberAndBinary that = (NumberAndBinary) o;
+        return Objects.equals(number, that.number) &&
+                Objects.equals(binaryOfNumber, that.binaryOfNumber);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
     public String toString() {
         return "NumberAndBinary{" +
                 "number=" + number +
-                ", binaryOfNumber=" + binaryOfNumber +
+                ", binaryOfNumber='" + binaryOfNumber + '\'' +
                 '}';
     }
 }
