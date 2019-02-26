@@ -8,13 +8,11 @@
 * Minimum knowledge about [spring boot](https://spring.io/projects/spring-boot)
 
 ### What you'll do
-1. Download and unzip this source repository, or clone it using [Git](https://git-scm.com):  
-  `git clone git@gitlab.com:intelygenz/igz-java-talent-test.git`
-2. **Read the issue** that has been assigned to you.
-3. **Create a merge request from the issue** from the issue detail screen, you can create a merge request to work on. When you create a merge request, a branch is also created.
-5. **Work on the branch** until you feel you have resolved the issue.
-6. Remove the **WIP** status on the merge request screen
-7. You are ready to go!
+1. **Read the issue** that has been assigned to you.
+2. **Create a merge request from the issue** from the issue detail screen, you can create a merge request to work on. When you create a merge request, a branch is also created.
+3. **Work on the branch** until you feel you have resolved the issue.
+4. Remove the **WIP** status on the merge request screen
+5. You are ready to go!
 
 More info: https://about.gitlab.com/2016/03/08/gitlab-tutorial-its-all-connected/
 
