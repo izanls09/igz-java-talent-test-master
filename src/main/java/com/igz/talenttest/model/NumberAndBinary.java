@@ -2,9 +2,6 @@ package com.igz.talenttest.model;
 
 import java.util.Objects;
 
-import static java.lang.Integer.toBinaryString;
-import static org.springframework.util.StringUtils.countOccurrencesOf;
-
 public class NumberAndBinary implements Comparable<NumberAndBinary> {
     private Integer number;
     private Integer binaryOfNumber;
@@ -41,10 +38,6 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
 
     public void setBinaryOfNumber(Integer number) {
         this.binaryOfNumber = Integer.bitCount(number);
-    }
-
-    public int occurrencesOfBinaryInNumber() {
-        return countOccurrencesOf(toBinaryString(this.number), "1");
     }
 
     @Override
