@@ -40,7 +40,8 @@ public class SortByBinaryService implements ISortByBinaryService {
     private ArrayList<NumberAndBinary> sortCompareNumber(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
         Collections.sort(unsortedNumberAndBinary);
         unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
-        return unsortedNumberAndBinary;
+        ArrayList<NumberAndBinary> sortedNumberAndBinary = unsortedNumberAndBinary;
+        return sortedNumberAndBinary;
     }
 
     private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){
