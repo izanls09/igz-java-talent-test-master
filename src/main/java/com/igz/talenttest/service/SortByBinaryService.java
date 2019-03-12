@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
-public class SortByBinaryService {
+public class SortByBinaryService implements ISortByBinaryService {
     public NumberAndBinaryOutput sortByBinaryThenDecimal(NumberAndBinaryInput numberAndBinaryInput) {
 
         NumberAndBinaryOutput numberAndBinaryOutput = new NumberAndBinaryOutput();
