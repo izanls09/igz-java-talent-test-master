@@ -3,10 +3,11 @@ package com.igz.talenttest.service;
 import com.igz.talenttest.input.NumberAndBinaryInput;
 import com.igz.talenttest.model.NumberAndBinary;
 import com.igz.talenttest.output.NumberAndBinaryOutput;
-
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,13 +39,7 @@ public class SortByBinaryService implements ISortByBinaryService {
 
     private ArrayList<NumberAndBinary> sortCompareNumber(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
         Collections.sort(unsortedNumberAndBinary);
-        for(int i = 0; i < unsortedNumberAndBinary.size() - 1; i++)
-            for (int j = i + 1; j < unsortedNumberAndBinary.size(); j++)
-                if (unsortedNumberAndBinary.get(i).getBinaryOfNumber() < unsortedNumberAndBinary.get(j).getBinaryOfNumber()) {
-                    NumberAndBinary secondaryList = new NumberAndBinary(unsortedNumberAndBinary.get(i));
-                    unsortedNumberAndBinary.set(i, unsortedNumberAndBinary.get(j));
-                    unsortedNumberAndBinary.set(j, secondaryList);
-                }
+        unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
         return unsortedNumberAndBinary;
     }
 
