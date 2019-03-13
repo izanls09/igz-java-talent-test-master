@@ -49,7 +49,7 @@ public class SortByBinaryService implements ISortByBinaryService {
     private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){
         ArrayList<Integer> output = sortedNumberAndBinary.stream()
                 .map(numberAndBinary -> numberAndBinary.getNumber())
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .collect(Collectors.toCollection(ArrayList::new));
         return output;
     }
 }
