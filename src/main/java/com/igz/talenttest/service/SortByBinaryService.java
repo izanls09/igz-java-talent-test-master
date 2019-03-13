@@ -5,12 +5,15 @@ import com.igz.talenttest.model.NumberAndBinary;
 import com.igz.talenttest.output.NumberAndBinaryOutput;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
 public class SortByBinaryService implements ISortByBinaryService {
+    private static final Logger LOGGER = Logger.getLogger(com.igz.talenttest.service.SortByBinaryService.class.getName());
+
     public NumberAndBinaryOutput sortByBinaryThenDecimal(NumberAndBinaryInput numberAndBinaryInput) {
 
         NumberAndBinaryOutput numberAndBinaryOutput = new NumberAndBinaryOutput();
@@ -20,15 +23,14 @@ public class SortByBinaryService implements ISortByBinaryService {
             ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
             ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
-
         } catch (NumberFormatException error) {
-            System.out.println("The format of the number was incorrect: " + error);
+            LOGGER.severe("The format of the number is incorrect: " + error);
         } catch (IllegalArgumentException error) {
-            System.out.println("There was an illegal argument in the number sent: " + error);
+            LOGGER.severe("There is an illegal argument in the number sent: " + error);
         } catch (NullPointerException error) {
-            System.out.println("The number can't be null: " + error);
+            throw new NullPointerException();
         } finally {
-            System.out.println("Everything went ok or, at least, the exception was controlled.");
+            LOGGER.info("Everything went ok or, at least, the exception was controlled.");
         }
         return numberAndBinaryOutput;
     }
