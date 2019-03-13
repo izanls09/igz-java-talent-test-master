@@ -1,44 +1,16 @@
 package com.igz.talenttest.input;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.util.ArrayList;
+
+@AllArgsConstructor
+@Data
 public class NumberAndBinaryInput {
     private ArrayList<Integer> unsortedList;
 
-    public NumberAndBinaryInput(){
+    public NumberAndBinaryInput() {
         super();
-    }
-
-    public NumberAndBinaryInput(ArrayList<Integer> unsortedList){
-        this.unsortedList = unsortedList;
-    }
-
-    public ArrayList<Integer> getUnsortedList() {
-        return unsortedList;
-    }
-
-    public void setUnsortedList(ArrayList<Integer> unsortedList) {
-        this.unsortedList = unsortedList;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NumberAndBinaryInput that = (NumberAndBinaryInput) o;
-        return Objects.equals(unsortedList, that.unsortedList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(unsortedList);
-    }
-
-    @Override
-    public String toString() {
-        return "NumberAndBinaryInput{" +
-                "unsortedList=" + unsortedList +
-                '}';
     }
 }

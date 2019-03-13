@@ -3,17 +3,16 @@ package com.igz.talenttest.service;
 import com.igz.talenttest.input.NumberAndBinaryInput;
 import com.igz.talenttest.model.NumberAndBinary;
 import com.igz.talenttest.output.NumberAndBinaryOutput;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class SortByBinaryService implements ISortByBinaryService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(com.igz.talenttest.service.SortByBinaryService.class);
 
     public NumberAndBinaryOutput sortByBinaryThenDecimal(NumberAndBinaryInput numberAndBinaryInput) {
 
@@ -25,10 +24,11 @@ public class SortByBinaryService implements ISortByBinaryService {
             ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
         } catch (NumberFormatException error) {
-            LOGGER.error("The format of the number is incorrect: " + error);
+            log.error("The format of the number is incorrect: " + error);
         } catch (IllegalArgumentException error) {
-            LOGGER.error("There is an illegal argument in the number sent: " + error);
+            log.error("There is an illegal argument in the number sent: " + error);
         } catch (NullPointerException error) {
+            log.info("The following error was thrown: " + error);
             throw new NullPointerException();
         }
         return numberAndBinaryOutput;
