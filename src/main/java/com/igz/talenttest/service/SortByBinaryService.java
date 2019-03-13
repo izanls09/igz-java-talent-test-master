@@ -20,15 +20,20 @@ public class SortByBinaryService implements ISortByBinaryService {
             ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
             ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
-        } catch(IllegalArgumentException e) {
-            System.out.println("The following error was given: " + e);
+
+        } catch (NumberFormatException error) {
+            System.out.println("The format of the number was incorrect: " + error);
+        } catch (IllegalArgumentException error) {
+            System.out.println("There was an illegal argument in the number sent: " + error);
+        } catch (NullPointerException error) {
+            System.out.println("The number can't be null: " + error);
         } finally {
             System.out.println("Everything went ok or, at least, the exception was controlled.");
         }
         return numberAndBinaryOutput;
     }
 
-    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData){
+    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException{
         ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
                 .filter(number -> number >= 0)
                 .map(NumberAndBinary::new)
@@ -38,8 +43,7 @@ public class SortByBinaryService implements ISortByBinaryService {
 
     private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
         unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
-        ArrayList<NumberAndBinary> sortedNumberAndBinary = unsortedNumberAndBinary;
-        return sortedNumberAndBinary;
+        return unsortedNumberAndBinary;
     }
 
     private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){

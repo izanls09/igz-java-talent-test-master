@@ -15,8 +15,9 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
         this.binaryOfNumber = Integer.bitCount(number);
     }
 
-    public int compareTo(NumberAndBinary unsortedNumberAndBinary) {
-        return 1;
+    @Override
+    public int compareTo(NumberAndBinary o) {
+        return 0;
     }
 
     public Integer getNumber() {
@@ -56,4 +57,6 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
                 ", binaryOfNumber='" + binaryOfNumber + '\'' +
                 '}';
     }
+
+
 }
