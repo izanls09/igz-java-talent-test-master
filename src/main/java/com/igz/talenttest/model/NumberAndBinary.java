@@ -1,10 +1,11 @@
 package com.igz.talenttest.model;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class NumberAndBinary implements Comparable<NumberAndBinary> {
-    private Integer number;
+    @NonNull private Integer number;
     private Integer binaryOfNumber;
 
     public NumberAndBinary() {
