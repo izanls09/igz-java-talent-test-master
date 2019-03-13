@@ -6,7 +6,6 @@ import com.igz.talenttest.output.NumberAndBinaryOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,7 @@ public class SortByBinaryService implements ISortByBinaryService {
 
         try {
             ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
-            ArrayList<NumberAndBinary> sortedNumberAndBinary = sortCompareNumber(unsortedNumberAndBinary);
+            ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
         } catch(IllegalArgumentException e) {
             System.out.println("The following error was given: " + e);
@@ -30,15 +29,14 @@ public class SortByBinaryService implements ISortByBinaryService {
     }
 
     private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData){
-        ArrayList<NumberAndBinary> numberAndBinary = new ArrayList<>();
-        inputData.stream().filter(number -> number >= 0)
-                .forEachOrdered(number -> numberAndBinary
-                        .add(new NumberAndBinary(number)));
+        ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
+                .filter(number -> number >= 0)
+                .map(NumberAndBinary::new)
+                .collect(Collectors.toCollection(ArrayList::new));
         return numberAndBinary;
     }
 
-    private ArrayList<NumberAndBinary> sortCompareNumber(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
-        Collections.sort(unsortedNumberAndBinary);
+    private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
         unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
         ArrayList<NumberAndBinary> sortedNumberAndBinary = unsortedNumberAndBinary;
         return sortedNumberAndBinary;

@@ -15,7 +15,7 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
         this.binaryOfNumber = Integer.bitCount(number);
     }
 
-    public int compareTo(NumberAndBinary secondaryList) {
+    public int compareTo(NumberAndBinary unsortedNumberAndBinary) {
         return 1;
     }
 
