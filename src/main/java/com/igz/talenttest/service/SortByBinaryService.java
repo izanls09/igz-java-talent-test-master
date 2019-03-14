@@ -28,6 +28,7 @@ public class SortByBinaryService implements ISortByBinaryService {
         } catch (IllegalArgumentException error) {
             log.error("There is an illegal argument in the numbers sent: " + error);
         } catch (NullPointerException error) {
+            log.info("We don't want to neither receive nor send null, so we throw the exception");
             throw new NullPointerException();
         }
         return numberAndBinaryOutput;
