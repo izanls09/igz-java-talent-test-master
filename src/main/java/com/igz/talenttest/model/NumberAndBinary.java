@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class NumberAndBinary implements Comparable<NumberAndBinary> {
+public class NumberAndBinary {
     @NonNull private Integer number;
     private Integer binaryOfNumber;
 
@@ -19,10 +19,5 @@ public class NumberAndBinary implements Comparable<NumberAndBinary> {
 
     public void setBinaryOfNumber(Integer number) {
         this.binaryOfNumber = Integer.bitCount(number);
-    }
-
-    @Override
-    public int compareTo(NumberAndBinary o) {
-        return 0;
     }
 }
