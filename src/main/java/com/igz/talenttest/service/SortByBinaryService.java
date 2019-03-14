@@ -1,6 +1,7 @@
 package com.igz.talenttest.service;
 
 import com.igz.talenttest.input.NumberAndBinaryInput;
+import com.igz.talenttest.model.NumberAndBinary;
 import com.igz.talenttest.output.NumberAndBinaryOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class SortByBinaryService implements ISortByBinaryService {
         ArrayList<Integer> inputData = numberAndBinaryInput.getUnsortedList();
 
         try {
-            ArrayList<com.igz.talenttest.model.NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
-            ArrayList<com.igz.talenttest.model.NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
+            ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
+            ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
         } catch (NumberFormatException error) {
             log.error("The format of the number is incorrect: " + error);
@@ -33,22 +34,22 @@ public class SortByBinaryService implements ISortByBinaryService {
         return numberAndBinaryOutput;
     }
 
-    private ArrayList<com.igz.talenttest.model.NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException{
-        ArrayList<com.igz.talenttest.model.NumberAndBinary> numberAndBinary = inputData.stream()
+    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException{
+        ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
                 .filter(number -> number >= 0)
-                .map(com.igz.talenttest.model.NumberAndBinary::new)
+                .map(NumberAndBinary::new)
                 .collect(Collectors.toCollection(ArrayList::new));
         return numberAndBinary;
     }
 
-    private ArrayList<com.igz.talenttest.model.NumberAndBinary> sortAndCompare(ArrayList<com.igz.talenttest.model.NumberAndBinary> unsortedNumberAndBinary) {
-        unsortedNumberAndBinary.sort(Comparator.comparingInt(com.igz.talenttest.model.NumberAndBinary::getBinaryOfNumber).reversed());
+    private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
+        unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
         return unsortedNumberAndBinary;
     }
 
-    private ArrayList<Integer> prepareOutput(ArrayList<com.igz.talenttest.model.NumberAndBinary> sortedNumberAndBinary){
+    private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){
         ArrayList<Integer> output = sortedNumberAndBinary.stream()
-                .map(com.igz.talenttest.model.NumberAndBinary::getNumber)
+                .map(NumberAndBinary::getNumber)
                 .collect(Collectors.toCollection(ArrayList::new));
         return output;
     }
