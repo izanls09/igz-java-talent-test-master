@@ -36,10 +36,14 @@ public class SortByBinaryService implements ISortByBinaryService {
 
     private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException{
         ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
-                .filter(number -> number >= 0)
+                .filter(SortByBinaryService::filterPositiveNumbers)
                 .map(NumberAndBinary::new)
                 .collect(Collectors.toCollection(ArrayList::new));
         return numberAndBinary;
+    }
+
+    private static boolean filterPositiveNumbers(Integer number) {
+        return number >= 0;
     }
 
     private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
