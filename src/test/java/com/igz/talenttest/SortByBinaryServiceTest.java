@@ -19,29 +19,26 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortByBinaryServiceTest {
-    @Mock
-    NumberAndBinaryInput numberAndBinaryInput;
     @InjectMocks
     SortByBinaryService sortByBinaryService;
+    @Mock
+    NumberAndBinaryInput numberAndBinaryInput;
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     final Integer[] INIT_VALUES = new Integer[] {1, 3, 5, 7, 15};
     final Integer[] EXPECTED_VALUES = new Integer[] {15, 7, 3, 5, 1};
+    final ArrayList<Integer> initialArrayList = new ArrayList<>(Arrays.asList(INIT_VALUES));
+    final ArrayList<Integer> expectedResultList = new ArrayList<>(Arrays.asList(EXPECTED_VALUES));
 
     @Test
     public void testAssertInputIsNotNull() {
-        ArrayList<Integer> initialArrayList = new ArrayList<>(Arrays.asList(INIT_VALUES));
-
         when(numberAndBinaryInput.getUnsortedList()).thenReturn(initialArrayList);
         assertNotNull(sortByBinaryService.sortByBinaryThenDecimal(numberAndBinaryInput));
     }
 
     @Test
     public void testAssertIsSortedRight() {
-        ArrayList<Integer> initialArrayList = new ArrayList<>(Arrays.asList(INIT_VALUES));
-        ArrayList<Integer> expectedResultList = new ArrayList<>(Arrays.asList(EXPECTED_VALUES));
-
         when(numberAndBinaryInput.getUnsortedList()).thenReturn(initialArrayList);
         assertEquals(expectedResultList, sortByBinaryService.sortByBinaryThenDecimal(numberAndBinaryInput).getSortedList());
     }
