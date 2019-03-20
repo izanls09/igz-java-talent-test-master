@@ -34,11 +34,13 @@ public class SortByBinaryService implements ISortByBinaryService {
         return numberAndBinaryOutput;
     }
 
-    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException{
+    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException {
+        log.info("Preparing the input...");
         ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
                 .filter(SortByBinaryService::filterPositiveNumbers)
                 .map(NumberAndBinary::new)
                 .collect(Collectors.toCollection(ArrayList::new));
+        log.info("Input prepared!");
         return numberAndBinary;
     }
 
@@ -47,14 +49,18 @@ public class SortByBinaryService implements ISortByBinaryService {
     }
 
     private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
+        log.info("Sorting the numbers...");
         unsortedNumberAndBinary.sort(Comparator.comparingInt(NumberAndBinary::getBinaryOfNumber).reversed());
+        log.info("Numbers sorted!");
         return unsortedNumberAndBinary;
     }
 
-    private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary){
+    private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary) {
+        log.info("Preparing the output...");
         ArrayList<Integer> output = sortedNumberAndBinary.stream()
                 .map(NumberAndBinary::getNumber)
                 .collect(Collectors.toCollection(ArrayList::new));
+        log.info("Output prepared!");
         return output;
     }
 }
