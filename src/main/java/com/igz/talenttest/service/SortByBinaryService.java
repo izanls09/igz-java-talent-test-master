@@ -4,7 +4,9 @@ import com.igz.talenttest.input.NumberAndBinaryInput;
 import com.igz.talenttest.model.NumberAndBinary;
 import com.igz.talenttest.output.NumberAndBinaryOutput;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,18 +25,14 @@ public class SortByBinaryService implements ISortByBinaryService {
             ArrayList<NumberAndBinary> unsortedNumberAndBinary = prepareInput(inputData);
             ArrayList<NumberAndBinary> sortedNumberAndBinary = sortAndCompare(unsortedNumberAndBinary);
             numberAndBinaryOutput.setSortedList(prepareOutput(sortedNumberAndBinary));
-        } catch (NumberFormatException error) {
+        } catch (NumberFormatException | NullPointerException error) {
             log.error("The format of the number is incorrect: " + error);
-        } catch (IllegalArgumentException error) {
-            log.error("There is an illegal argument in the numbers sent: " + error);
-        } catch (NullPointerException error) {
-            log.info("We don't want to neither receive nor send null, so we throw the exception");
-            throw new NullPointerException();
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "The number's format is wrong or there was a null.", error);
         }
         return numberAndBinaryOutput;
     }
 
-    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) throws NumberFormatException {
+    private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) {
         log.info("Preparing the input...");
         ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
                 .filter(SortByBinaryService::filterPositiveNumbers)
