@@ -14,22 +14,22 @@ import org.mockito.junit.MockitoRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortByBinaryServiceTest {
+    private final Integer[] INIT_VALUES = new Integer[]{1, 3, 5, 7, 15};
+    private final Integer[] EXPECTED_VALUES = new Integer[]{15, 7, 3, 5, 1};
+    private final ArrayList<Integer> initialArrayList = new ArrayList<>(Arrays.asList(INIT_VALUES));
+    private final ArrayList<Integer> expectedResultList = new ArrayList<>(Arrays.asList(EXPECTED_VALUES));
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
     @InjectMocks
     SortByBinaryService sortByBinaryService;
     @Mock
     NumberAndBinaryInput numberAndBinaryInput;
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    final Integer[] INIT_VALUES = new Integer[] {1, 3, 5, 7, 15};
-    final Integer[] EXPECTED_VALUES = new Integer[] {15, 7, 3, 5, 1};
-    final ArrayList<Integer> initialArrayList = new ArrayList<>(Arrays.asList(INIT_VALUES));
-    final ArrayList<Integer> expectedResultList = new ArrayList<>(Arrays.asList(EXPECTED_VALUES));
 
     @Test
     public void testAssertInputIsNotNull() {
