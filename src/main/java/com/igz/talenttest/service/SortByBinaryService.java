@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SortByBinaryService implements ISortByBinaryService {
 
+    private static boolean filterPositiveNumbers(Integer number) {
+        return number >= 0;
+    }
+
     public NumberAndBinaryOutput sortByBinaryThenDecimal(NumberAndBinaryInput numberAndBinaryInput) {
 
         NumberAndBinaryOutput numberAndBinaryOutput = new NumberAndBinaryOutput();
@@ -33,15 +37,10 @@ public class SortByBinaryService implements ISortByBinaryService {
     }
 
     private ArrayList<NumberAndBinary> prepareInput(ArrayList<Integer> inputData) {
-        ArrayList<NumberAndBinary> numberAndBinary = inputData.stream()
+        return inputData.stream()
                 .filter(SortByBinaryService::filterPositiveNumbers)
                 .map(NumberAndBinary::new)
                 .collect(Collectors.toCollection(ArrayList::new));
-        return numberAndBinary;
-    }
-
-    private static boolean filterPositiveNumbers(Integer number) {
-        return number >= 0;
     }
 
     private ArrayList<NumberAndBinary> sortAndCompare(ArrayList<NumberAndBinary> unsortedNumberAndBinary) {
@@ -50,9 +49,8 @@ public class SortByBinaryService implements ISortByBinaryService {
     }
 
     private ArrayList<Integer> prepareOutput(ArrayList<NumberAndBinary> sortedNumberAndBinary) {
-        ArrayList<Integer> output = sortedNumberAndBinary.stream()
+        return sortedNumberAndBinary.stream()
                 .map(NumberAndBinary::getNumber)
                 .collect(Collectors.toCollection(ArrayList::new));
-        return output;
     }
 }

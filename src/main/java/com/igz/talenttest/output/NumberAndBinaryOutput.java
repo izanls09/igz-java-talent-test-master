@@ -11,5 +11,6 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Data
 public class NumberAndBinaryOutput {
-    @NonNull private ArrayList<Integer> sortedList;
+    @NonNull
+    private ArrayList<Integer> sortedList;
 }

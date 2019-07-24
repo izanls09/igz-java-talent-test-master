@@ -9,7 +9,8 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Data
 public class NumberAndBinary {
-    @NonNull private Integer number;
+    @NonNull
+    private Integer number;
     private Integer binaryOfNumber;
 
     public NumberAndBinary(Integer number) {

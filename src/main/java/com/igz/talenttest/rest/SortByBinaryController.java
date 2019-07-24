@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SortByBinaryController {
     @Autowired
     ISortByBinaryService iSortByBinaryService;
+
     @RequestMapping(value = "/sortByBinaryAndThenDecimal/numbers/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public NumberAndBinaryOutput sortByBinaryController(@RequestBody NumberAndBinaryInput numberAndBinaryInput) {
-        NumberAndBinaryOutput numberAndBinaryOutput = iSortByBinaryService.sortByBinaryThenDecimal(numberAndBinaryInput);
-        return numberAndBinaryOutput;
+        return iSortByBinaryService.sortByBinaryThenDecimal(numberAndBinaryInput);
     }
 }
